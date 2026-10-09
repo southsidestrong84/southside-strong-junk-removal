@@ -20,7 +20,7 @@ SERVICES = [
 <li>Recliners and lift chairs</li><li>Dressers, chests and nightstands</li><li>Bed frames, headboards and bunk beds</li>
 <li>Dining tables and chairs</li><li>Desks, file cabinets and office chairs</li><li>Entertainment centers and bookcases</li>
 <li>Patio furniture</li><li>Cribs, toy chests and kids' furniture</li></ul>"""),
-      ("Taking it apart beats taking off the door frame", """<p>A lot of furniture went into a house before a remodel, a new railing or a tighter stairwell. Reclining sofas with metal rails are the classic one. Instead of forcing it and gouging the walls, we take the piece apart and carry it out in sections.</p>
+      ("Couch removal: taking it apart beats taking off the door frame", """<p>A lot of furniture went into a house before a remodel, a new railing or a tighter stairwell. Reclining sofas with metal rails are the classic one. Instead of forcing it and gouging the walls, we take the piece apart and carry it out in sections.</p>
 <p>One of our customers put it this way after we pulled a large leather reclining sofa and chair out of a tight space: Steve "took the time to disassemble" them first, which "made for an easier way to get it out of the house."</p>"""),
       ("Basements, attics and second floors", """<p>You do not have to drag anything to the curb. Tell us where it is: the basement rec room, a finished attic, a second-floor bedroom, the back of the garage. We bring the dollies and the straps, protect the corners on the way out, and sweep up when the room is empty.</p>"""),
       ("When the village pickup is not enough", """<p>Most towns around Chicago Ridge collect some bulk items with the weekly garbage, usually with limits on how many pieces and where they have to sit. That works for one chair at the curb. It does not work for a basement full of furniture, or for anyone who cannot carry a sleeper sofa up a flight of stairs. Check your own town's rules on our <a href="{u:/service-area/}">service area pages</a>, then call us for the rest.</p>"""),
@@ -59,12 +59,12 @@ SERVICES = [
   {
     "slug": "mattress-removal", "name": "Mattress removal", "icon": "bed",
     "card": "Mattresses, box springs and bed frames, from any bedroom, carried out and hauled away.",
-    "title": "Mattress & Box Spring Removal | Chicago Ridge, IL",
+    "title": "Mattress Disposal & Removal | Chicago Ridge & Oak Lawn",
     "desc": "Mattress, box spring and bed frame removal in Chicago Ridge, Oak Lawn and the southwest suburbs. One mattress or a whole house, carried out and hauled away.",
-    "h1": "Mattress and box spring removal",
+    "h1": "Mattress disposal and removal",
     "lede": "A new mattress showed up and the old one is leaning in the hallway. Or you are clearing out a rental with a mattress in every room. Either way, we carry them out and haul them away.",
     "body": [
-      ("What we take", """<ul class="checks cols">
+      ("Mattress removal: what we take", """<ul class="checks cols">
 <li>Mattresses of any size, including memory foam and pillow tops</li><li>Box springs and foundations</li>
 <li>Adjustable bed bases</li><li>Bed frames, headboards and footboards</li><li>Bunk beds and daybeds</li><li>Futons and futon frames</li></ul>"""),
       ("Why mattresses are a hassle to get rid of", """<p>Mattresses are bulky, floppy and hard to carry down a staircase alone, and garbage programs often limit bulk items. Check your town's rule on our <a href="{u:/service-area/}">service area pages</a>, or skip the rules and let us carry it out.</p>
@@ -221,7 +221,7 @@ SERVICES = [
     "h1": "Garage cleanouts",
     "lede": "The car has not been in the garage in years. Old paint cans, a broken mower, boxes from the last move, a workbench nobody uses. We clear it out with you, haul the junk away and sweep the floor.",
     "body": [
-      ("How a garage cleanout goes", """<ol>
+      ("Garage clean up services, start to finish", """<ol>
 <li><b>Walk through.</b> You show us what stays and what goes. Mark the keep pile or just tell us as we work.</li>
 <li><b>We load.</b> We carry out everything that goes, including the heavy stuff: old freezers, mowers, workbenches, shelving.</li>
 <li><b>We sweep.</b> When the junk is gone, the floor gets swept and you get your parking spot back.</li></ol>"""),
@@ -264,12 +264,12 @@ SERVICES = [
     "h1": "Estate cleanouts and whole-house cleanouts",
     "lede": "Clearing out a parent's home, getting a house ready to sell, or moving out of a place you lived in for forty years. It is a lot of stuff and usually a lot of feelings. We work room by room, keep what you are keeping safe, and leave the house broom clean.",
     "body": [
-      ("How we work through a whole house", """<ol>
+      ("Estate cleanout services: how we work through a whole house", """<ol>
 <li><b>You decide what stays.</b> Family takes what they want first. Mark the keep items, or put them in one room we will not touch.</li>
 <li><b>We go room by room.</b> Furniture, closets, kitchen, basement, garage and yard. If we come across anything that looks important, like papers, photos or jewelry, we set it aside and tell you.</li>
 <li><b>Broom clean.</b> When the last load leaves, the house is swept and ready for a realtor, an estate sale company, a buyer or the next family.</li></ol>"""),
       ("Working with realtors, executors and families out of town", """<p>If you are handling a house from out of state, or you are the executor juggling a dozen other tasks, we can work with your realtor or a family member on site. Tell us who has the keys and how you want to get updates.</p>"""),
-      ("Heavy cleanouts", """<p>Some homes are much harder than a normal cleanout: years of accumulation, spoiled food, pests, or conditions that are not safe to live in. We handle those too, without judgment. One customer, cleaning out a client's home, called it "practically a health hazard" and said it "was done quickly." If the home has biohazards like human waste or needles, tell us up front so we can plan for the right help.</p>"""),
+      ("Hoarding cleanouts and heavy cleanouts", """<p>Some homes are much harder than a normal cleanout: years of accumulation, spoiled food, pests, or conditions that are not safe to live in. We handle those too, without judgment. One customer, cleaning out a client's home, called it "practically a health hazard" and said it "was done quickly." If the home has biohazards like human waste or needles, tell us up front so we can plan for the right help.</p>"""),
     ],
     "faqs": [
       ("Do I need to be there for the whole cleanout?", "<p>No. Many families walk through with us at the start, then let us work. We will call or text with questions and when we are done.</p>"),
@@ -302,9 +302,9 @@ SERVICES = [
   {
     "slug": "electronics-removal", "name": "TV and electronics removal", "icon": "tv",
     "card": "Old TVs, computers, monitors and printers kept out of the landfill, as Illinois law requires.",
-    "title": "TV & Electronics Removal | Chicago Ridge & Oak Lawn",
+    "title": "TV Disposal & Electronics Removal | Chicago Ridge",
     "desc": "TV, computer and electronics removal in Chicago Ridge, Oak Lawn and the southwest suburbs. Illinois bans these from landfills; we keep them out.",
-    "h1": "TV and electronics removal",
+    "h1": "TV disposal and electronics removal",
     "lede": "Old tube TVs, flat screens with a cracked panel, a closet of dead computers and printers. In Illinois these cannot go in the garbage. We carry them out and keep them out of the landfill.",
     "body": [
       ("What we take", """<ul class="checks cols">

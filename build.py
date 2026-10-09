@@ -356,13 +356,13 @@ def build_home():
       ("How much does junk removal cost?", f"<p>It depends on how much there is, what it is, and how hard it is to get out. Call or text a photo to {PHONE} and we will give you a straight price before we start. See <a href=\"{{u:/pricing/}}\">how pricing works</a>.</p>"),
       ("Do I have to bring everything outside?", "<p>No. We carry it out from wherever it is: basement, attic, upstairs, garage or backyard.</p>"),
       ("What do you not take?", "<p>Household hazardous waste like wet paint, solvents, chemicals, motor oil and propane tanks. See <a href=\"{u:/what-we-take/}\">what we take</a> for the full list and where those items can go.</p>"),
-      ("Do you take just one item?", "<p>Yes. A single couch, mattress or fridge is a normal call.</p>"),
-      ("Which towns do you serve?", "<p>Chicago Ridge and the southwest suburbs, plus Chicago's Southwest Side. See the <a href=\"{u:/service-area/}\">service area</a> for every town.</p>"),
+      ("Do you do junk pickup for just one item?", "<p>Yes. A single couch, mattress or fridge is a normal call.</p>"),
+      ("Do you offer junk removal near me?", "<p>If you are in Chicago Ridge, the southwest suburbs or on Chicago's Southwest Side, yes. Find your town on the <a href=\"{u:/service-area/}\">service area</a> page.</p>"),
     ]
-    main = (section("What we haul", service_cards(SERVICES), cls="band", kicker="Services", sub="If it is not hazardous, we can probably take it. Pick a job to see how it works.")
+    main = (section("Junk removal services", service_cards(SERVICES), cls="band", kicker="What we haul", sub="Residential and commercial junk removal. If it is not hazardous, we can probably take it. Pick a job to see how it works.")
             + section("How it works", steps, cls="band alt", kicker="Three steps")
             + section("What customers say", rev, cls="band", kicker="Reviews")
-            + section("Built by the Southside", about, cls="band sky", kicker="About us")
+            + section("A local, father-and-son junk removal company", about, cls="band sky", kicker="Built by the Southside")
             + section("Where we work", area, cls="band", kicker="Service area", sub="Based in Chicago Ridge. Here is how far each town is from our base.")
             + section("Questions people ask", faq_html(faqs), cls="band alt", kicker="FAQ")
             + cta_band())

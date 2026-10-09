@@ -109,7 +109,7 @@ def compose(slug, town, census, facts, towns_meta, reviews, esc, phone, outlets,
     miles = 0 if is_home else (c["miles_from_chicago_ridge"] if c else None)
 
     if is_chicago:
-        title = "Junk Removal on Chicago's Southwest Side | Beverly & More"
+        title = "Junk Removal Chicago, Southwest Side | Beverly & Morgan Park"
         desc = "Junk removal in Beverly, Mount Greenwood, Morgan Park and the rest of Chicago's Southwest Side, from a locally owned crew based in Chicago Ridge. Free estimates."
         h1 = "Junk removal on Chicago's Southwest Side"
         lede = ("Beverly, Mount Greenwood, Morgan Park and the neighborhoods around them are right next door to our base in "
