@@ -124,7 +124,7 @@ def reviews_matching(words, n, exclude=()):
 def review_block(rs, three=False):
     return f'<div class="reviews{" three" if three else ""}">' + "".join(review_card(r) for r in rs) + "</div>"
 
-TOPICS = {"pool": ["pool"], "demo": ["demo", "deck", "scrap wood", "remodel"], "commercial": ["commercial", "business", "buisness", "client"]}
+TOPICS = {"swing": ["swing set"], "pool": ["pool"], "demo": ["demo", "deck", "scrap wood", "remodel"], "commercial": ["commercial", "business", "buisness", "client"]}
 
 # ---------------------------------------------------------------- data
 CENSUS = json.load(open(os.path.join(RESEARCH, "towns", "towns-census.json"), encoding="utf-8"))["towns"]
@@ -138,6 +138,11 @@ for f in sorted(glob.glob(os.path.join(RESEARCH, "towns", "facts-group*.json")))
             for k in ov.get("drop", []):
                 if k in row["facts"]:
                     row["facts"][k] = {"status": "unknown", "dropped": True}
+            for k, v in row["facts"].items():
+                if isinstance(v, dict) and v.get("value"):
+                    # research cross-references ("see extras") point at notes the page never shows
+                    v["value"] = re.sub(r"\s*\(see (extras|hauler|electronics)\)", "", v["value"])
+                    v["value"] = re.sub(r"[;,]\s*see extras", "", v["value"])
             for k, v in ov.get("display", {}).items():
                 if row["facts"].get(k, {}).get("status") == "verified":
                     row["facts"][k]["value"] = v
@@ -413,9 +418,9 @@ def build_towns():
         near_html = towns_list([(s, t, f"{m:.1f} mi" if m is not None else "") for s, t, m in near])
         svc_links = "<p>" + " &middot; ".join(f'<a href="{u("/" + sl + "/")}">{esc(nm)}</a>' for sl, nm in d["services"]) + f' &middot; <a href="{u("/services/")}">every service</a></p>'
         main = (body + section(f"Junk removal questions from {d['place']}", faq_html(d["faqs"]), cls="band")
-                + section(f"Jobs we do in {d['place']}", svc_links, cls="band alt")
+                + section(f"Jobs we do {d['in_place']}", svc_links, cls="band alt")
                 + section("Nearby towns we serve", near_html, cls="band sky")
-                + cta_band(f"Junk removal in {d['place']}", f"Call or text {PHONE}. Free estimates."))
+                + cta_band(f"Junk removal {d['in_place']}", f"Call or text {PHONE}. Free estimates."))
         area = ({"@type": "City", "name": "Chicago, IL"} if slug == "chicago" else {"@type": "City", "name": f"{town}, IL"})
         svc = {"@context": "https://schema.org", "@type": "Service", "name": f"Junk removal in {d['place']}", "serviceType": "Junk removal",
                "provider": {"@id": BUSINESS_ID}, "areaServed": area, "url": absu(path)}

@@ -104,6 +104,8 @@ def compose(slug, town, census, facts, towns_meta, reviews, esc, phone, outlets,
     contact = (facts or {}).get("contact")
     caveat = (facts or {}).get("caveat")
     place = "Chicago's Southwest Side" if is_chicago else town
+    in_place = "on Chicago's Southwest Side" if is_chicago else f"in {town}"
+    service_of = "the City of Chicago's" if is_chicago else f"{town}'s"
     miles = 0 if is_home else (c["miles_from_chicago_ridge"] if c else None)
 
     if is_chicago:
@@ -145,21 +147,21 @@ def compose(slug, town, census, facts, towns_meta, reviews, esc, phone, outlets,
     else:
         ask = f"Ask {who}"
     if rule_cards:
-        intro = (f"<p>Before you pay anyone to haul something away, it is worth knowing what {place}'s regular garbage service will take. "
+        intro = (f"<p>Before you pay anyone to haul something away, it is worth knowing what {service_of} regular garbage service will take. "
                  f"Here is what we could confirm on {who}'s own pages.</p>")
         tail = ""
         if unknown:
             topics = ", ".join(TOPIC_WORDS[k] for k in unknown)
-            tail = f'<p class="note">We could not confirm {place}\'s current rules on {topics}. {ask} before you set those out.</p>'
+            tail = f'<p class="note">We could not confirm {service_of} current rules on {topics}. {ask} before you set those out.</p>'
         who_card = ""
         if contact:
             pw = verified.get("public_works_contact", {})
-            who_card = (f'<div class="fact"><h3>Who to call in {esc(place)}</h3><p>{esc(contact)}</p>'
+            who_card = (f'<div class="fact"><h3>Who to call {esc("in Chicago" if is_chicago else in_place)}</h3><p>{esc(contact)}</p>'
                         + (f'<p class="src">Source: <a href="{esc(pw.get("url", ""))}" rel="nofollow noopener" target="_blank">{esc(pw.get("url", "").split("/")[2] if "//" in pw.get("url", "") else "")}</a>, checked {usdate(pw.get("accessed", ""))}</p>' if pw.get("url") else "")
                         + "</div>")
         cav = f'<p class="callout">{esc(caveat)}</p>' if caveat else ""
         close = "<p>More than the pickup allows, anything inside the house, hot tubs, pools, sheds and whole cleanouts: that is where we come in.</p>"
-        sections.append((f"What {place}'s garbage pickup will take", intro + cav + f'<div class="facts">{"".join(rule_cards)}{who_card}</div>' + tail + close))
+        sections.append((("What Chicago's city garbage pickup will take" if is_chicago else f"What {place}'s garbage pickup will take"), intro + cav + f'<div class="facts">{"".join(rule_cards)}{who_card}</div>' + tail + close))
     else:
         sections.append((f"Before you set it at the curb in {place}",
                          f"<p>We have not yet confirmed {place}'s rules for bulk items, appliances, yard waste and electronics. {ask} what the regular garbage service takes, and call us for anything it does not.</p>"))
@@ -194,21 +196,21 @@ def compose(slug, town, census, facts, towns_meta, reviews, esc, phone, outlets,
     # FAQs from verified facts first.
     faqs = []
     if "bulk_pickup" in verified:
-        faqs.append((f"Will the garbage service pick up furniture in {place}?",
+        faqs.append((f"Will the garbage service pick up furniture {in_place}?",
                      f"<p>{esc(verified['bulk_pickup']['value'])}</p><p>For more than that, or for anything inside the house, call or text us at {phone}.</p>"))
     if "appliances" in verified:
-        faqs.append((f"How do I get rid of an old refrigerator in {place}?",
+        faqs.append((f"How do I get rid of an old refrigerator {in_place}?",
                      f"<p>{esc(verified['appliances']['value'])}</p><p>We can also carry it out from the kitchen, garage or basement and take it where appliances are handled properly.</p>"))
     if "yard_waste" in verified:
-        faqs.append((f"How does yard waste pickup work in {place}?", f"<p>{esc(verified['yard_waste']['value'])}</p>"))
+        faqs.append((f"How does yard waste pickup work {in_place}?", f"<p>{esc(verified['yard_waste']['value'])}</p>"))
     if "construction_debris" in verified:
-        faqs.append((f"Can remodeling debris go out with the garbage in {place}?",
+        faqs.append((f"Can remodeling debris go out with the garbage {in_place}?",
                      f"<p>{esc(verified['construction_debris']['value'])}</p>"))
     if is_home:
         faqs.append(("Where are you located?", "<p>We are based in Chicago Ridge, IL 60415, and we work all over the southwest suburbs and Chicago's Southwest Side.</p>"))
     elif miles is not None:
         faqs.append((f"How far is {place} from you?", f"<p>About {miles:g} miles from our base in Chicago Ridge, measured as a straight line between town centers.</p>"))
-    faqs.append((f"Do you give free estimates in {place}?", f"<p>Yes. Call or text {phone}, or send a photo of what needs to go, and we will give you a price.</p>"))
+    faqs.append((f"Do you give free estimates {in_place}?", f"<p>Yes. Call or text {phone}, or send a photo of what needs to go, and we will give you a price.</p>"))
 
     # Nearby towns with pages, by straight-line distance between town centers.
     nearby = []
@@ -232,5 +234,5 @@ def compose(slug, town, census, facts, towns_meta, reviews, esc, phone, outlets,
         if (c["median_year_built"] or 0) >= 1975: svc.append(("hot-tub-removal", "Hot tub removal"))
     for extra in (("furniture-removal", "Furniture removal"), ("appliance-removal", "Appliance removal"), ("above-ground-pool-removal", "Above-ground pool removal")):
         if len(svc) < 5: svc.append(extra)
-    return {"services": svc, "title": title, "desc": desc, "h1": h1, "lede": lede, "sections": sections, "faqs": faqs, "nearby": nearby,
+    return {"in_place": in_place, "services": svc, "title": title, "desc": desc, "h1": h1, "lede": lede, "sections": sections, "faqs": faqs, "nearby": nearby,
             "verified_count": len(verified), "place": place}

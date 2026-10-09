@@ -134,7 +134,7 @@ SERVICES = [
 <li>Brush, branches and storm debris</li><li>Bagged leaves and yard waste</li><li>Old fencing and posts</li>
 <li>Swing sets and playsets</li><li>Trampolines</li><li>Old sheds (see <a href="{u:/light-demolition/}">light demolition</a>)</li>
 <li>Landscape timbers, pavers and edging</li><li>Outdoor furniture and grills</li></ul>"""),
-      ("Swing sets and playsets", """<p>Wooden playsets are built to stay put. We take them apart, pull the hardware and haul the lumber, slide and canopy away. A customer in our reviews hired us to remove a swing set and called the whole thing "easy." That is the goal.</p>"""),
+      ("Swing sets and playsets", """<p>Wooden playsets are built to stay put. We take them apart and haul the lumber, slide and canopy away. See <a href="{u:/swing-set-removal/}">swing set and playset removal</a> for how it goes.</p>"""),
       ("Yard waste has its own rules", """{fact:yard_rules}"""),
     ],
     "faqs": [
@@ -143,6 +143,30 @@ SERVICES = [
     ],
     "review_words": ["swing set", "outside", "yard", "deck"],
     "related": ["light-demolition", "above-ground-pool-removal", "construction-debris-removal"],
+  },
+  {
+    "slug": "swing-set-removal", "name": "Swing set and playset removal", "icon": "leaf",
+    "card": "Wooden playsets, metal swing sets and trampolines taken apart, hauled away and the yard left clean.",
+    "title": "Swing Set & Playset Removal | Chicago Ridge & Oak Lawn",
+    "desc": "Swing set, playset and trampoline removal in Chicago Ridge, Oak Lawn and the southwest suburbs. We take it apart, haul it away and leave the yard clean.",
+    "h1": "Swing set and playset removal",
+    "lede": "The kids outgrew it, the wood is going gray, and it takes up half the yard. We take the swing set apart, haul away the lumber, slide, swings and hardware, and leave the yard clean.",
+    "body": [
+      ("What we take", """<ul class="checks cols">
+<li>Wooden playsets and swing sets</li><li>Metal swing sets</li><li>Slides, climbing walls and monkey bars</li>
+<li>Playhouses and sandboxes</li><li>Trampolines, springs and safety nets</li><li>Portable basketball hoops</li></ul>"""),
+      ("How it goes", """<p>Playsets are bolted and screwed together to stand up to years of kids, so they do not come out in one piece. We take the set apart where it stands, carry the pieces out through the gate, load the truck and pick up the hardware so nothing is left in the grass.</p>
+<p>Some sets are anchored in concrete footings. Tell us when you ask for the estimate, and send a photo of the legs if you can, so we can plan for it.</p>"""),
+      ("What a customer said", """{reviews:swing}"""),
+      ("While we are in the yard", """<p>An old shed, a dead hot tub, a pool that has had its last summer, a pile of brush behind the garage: if it is going too, we can take it in the same trip. See <a href="{u:/yard-waste-removal/}">yard and outdoor cleanup</a>, <a href="{u:/hot-tub-removal/}">hot tub removal</a> and <a href="{u:/above-ground-pool-removal/}">above-ground pool removal</a>.</p>"""),
+    ],
+    "faqs": [
+      ("Do you take apart wooden playsets?", "<p>Yes. We take it apart on site, haul everything away and leave the area clean.</p>"),
+      ("Do you take trampolines?", "<p>Yes: the frame, the springs, the mat and the safety net.</p>"),
+      ("What if the legs are set in concrete?", "<p>Tell us when you ask for the estimate and send a photo of the legs, so we can plan for it.</p>"),
+    ],
+    "review_words": ["swing set", "swing"],
+    "related": ["yard-waste-removal", "above-ground-pool-removal", "hot-tub-removal"],
   },
   {
     "slug": "light-demolition", "name": "Light demolition", "icon": "hammer",
