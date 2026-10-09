@@ -35,7 +35,8 @@ li { margin: .25em 0; }
 header.site { background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; }
 header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 68px; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--navy); min-width: 0; }
-.brand img { width: 48px; height: 48px; border-radius: 50%; flex: none; }
+.brand img { width: auto; height: 52px; flex: none; }
+@media (min-width: 980px) { .brand img { height: 60px; } }
 .brand .word { font-family: var(--display); font-weight: 700; line-height: 1; text-transform: uppercase; }
 .brand .word b { display: block; font-size: 1.28rem; letter-spacing: .02em; }
 .brand .word i { display: block; font-style: normal; color: var(--red); font-size: .82rem; letter-spacing: .14em; margin-top: 3px; }
@@ -214,7 +215,7 @@ form.estimate .fine { font-size: .85rem; color: var(--muted); margin: 0; }
 /* Photo slots */
 .photos { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 860px) { .photos { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.photos figure { margin: 0; border-radius: var(--radius); overflow: hidden; background: var(--navy); aspect-ratio: 4 / 3; position: relative; }
+.photos figure { margin: 0; border-radius: var(--radius); overflow: hidden; background: var(--navy); aspect-ratio: 1 / 1; position: relative; }
 .photos img { width: 100%; height: 100%; object-fit: cover; }
 .photos figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 8px 10px; font-size: .82rem; color: #fff; background: linear-gradient(transparent, rgba(0,0,0,.7)); }
 

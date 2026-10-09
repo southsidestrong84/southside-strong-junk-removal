@@ -26,6 +26,7 @@ RESEARCH = os.path.normpath(os.path.join(HERE, "..", "research"))
 sys.path.insert(0, HERE)
 from content.services import SERVICES
 from content.facts import FACTS
+from content.photos import PHOTOS, HOME_GALLERY, ABOUT_GALLERY
 from content import towns as T
 
 BRAND = "Southside Strong Junk Removal"
@@ -36,14 +37,16 @@ EMAIL = "southsidestrong84@gmail.com"
 BASE = "/southside-strong-junk-removal"          # "" once a custom domain points at this repo
 SITE = "https://ogeddiesmith.github.io" + BASE
 NOINDEX = True
-ASSET_V = "4"
+ASSET_V = "5"
 FACEBOOK = "https://www.facebook.com/profile.php?id=61576515234106"
 PLACE_ID = "ChIJhbWVU5cHPGQR6F34P4rSmgw"
 GOOGLE_REVIEWS = f"https://search.google.com/local/reviews?placeid={PLACE_ID}"
 GOOGLE_MAPS = f"https://www.google.com/maps/place/?q=place_id:{PLACE_ID}"
 MOTTO = "Built on Truth. Work Hard. Stay Southside Strong."
 RATING, RATING_COUNT, RATING_ASOF = "5.0", 34, "October 2026"   # Google Business Profile, read 2026-10-09
-LOGO = "/assets/img/mark.svg"                    # placeholder mark until the owner's logo file is approved for use
+LOGO = "/assets/img/logo.webp"                   # the business's own logo, from its Facebook page (Eddie's OK 2026-10-09)
+LOGO_PNG = "/assets/img/logo.png"
+LEGAL_NAME = "Southside Strong Junk Removal LLC"  # as printed in the logo
 
 esc = lambda s: html.escape(str(s), quote=True)
 u = lambda p: BASE + p
@@ -76,6 +79,7 @@ def ico(name):
       "pin": '<path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/>',
       "shield": '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/>',
       "tag": '<path d="M20 12 12 20l-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
+      "trailer": '<path d="M2 7h15v9H2zM17 12h3l2 2v2h-5"/><circle cx="6.5" cy="17.5" r="2"/><circle cx="12.5" cy="17.5" r="2"/>',
     }[name]
     return f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{p}</svg>'
 
@@ -124,6 +128,24 @@ def reviews_matching(words, n, exclude=()):
 def review_block(rs, three=False):
     return f'<div class="reviews{" three" if three else ""}">' + "".join(review_card(r) for r in rs) + "</div>"
 
+from PIL import Image as _Image
+_DIMS = {}
+def photo_dims(name):
+    if name not in _DIMS:
+        with _Image.open(os.path.join(HERE, "assets", "img", "photos", name + ".webp")) as im:
+            _DIMS[name] = im.size
+    return _DIMS[name]
+
+def gallery(names, eager=False):
+    figs = []
+    for n in names:
+        p = PHOTOS[n]; w, h = photo_dims(n)
+        pos = f' style="object-position:{p["pos"]}"' if p.get("pos") else ""
+        lazy = "" if eager else ' loading="lazy"'
+        figs.append(f'<figure><img src="{u("/assets/img/photos/" + n + ".webp")}" alt="{esc(p["alt"])}" width="{w}" height="{h}"'
+                    f'{lazy} decoding="async"{pos}><figcaption>{esc(p["cap"])}</figcaption></figure>')
+    return '<div class="photos">' + "".join(figs) + "</div>"
+
 TOPICS = {"swing": ["swing set"], "pool": ["pool"], "demo": ["demo", "deck", "scrap wood", "remodel"], "commercial": ["commercial", "business", "buisness", "client"]}
 
 # ---------------------------------------------------------------- data
@@ -152,9 +174,14 @@ for f in sorted(glob.glob(os.path.join(RESEARCH, "towns", "facts-group*.json")))
     except Exception as e:
         print(f"warning: could not read {os.path.basename(f)}: {e}")
 
+# A town page is built only once its verified village facts exist (as the FVI build gates its waves). Until then the
+# town is not built, not linked and not in the sitemap.
+ACTIVE = [(sl, t) for sl, t in T.WAVE1 if sl in TOWN_FACTS]
+
 # ---------------------------------------------------------------- placeholder fill
 def fill(s):
     s = re.sub(r"\{u:(/[^}]*)\}", lambda m: u(m.group(1)), s)
+    s = s.replace("{phone}", PHONE)
     def fact(m):
         f = FACTS[m.group(1)]
         src = "".join(f'<li><a href="{esc(url)}" rel="nofollow noopener" target="_blank">{esc(label)}</a></li>' for label, url in f.get("sources", []))
@@ -202,7 +229,9 @@ BUSINESS_ID = absu("/#business")
 def business_schema():
     areas = [{"@type": "City", "name": f"{t}, IL"} for _, t in T.WAVE1] + [{"@type": "City", "name": f"{t}, IL"} for t in T.LISTED_FARTHER] + [{"@type": "City", "name": "Chicago, IL"}]
     return {"@context": "https://schema.org", "@type": "LocalBusiness", "@id": BUSINESS_ID, "name": BRAND, "url": absu("/"),
-            "telephone": "+1-708-247-6440", "email": EMAIL, "image": absu("/assets/img/og.jpg"), "logo": absu(LOGO),
+            "legalName": LEGAL_NAME, "telephone": "+1-708-247-6440", "email": EMAIL,
+            "image": [absu("/assets/img/og.jpg")] + [absu(f"/assets/img/photos/{n}.webp") for n in ("dump-trailer-curbside", "garage-cleanout-before")],
+            "logo": absu(LOGO_PNG),
             "description": "Locally owned junk removal company based in Chicago Ridge, IL, serving the southwest suburbs and Chicago's Southwest Side.",
             "slogan": MOTTO, "address": {"@type": "PostalAddress", "addressLocality": "Chicago Ridge", "addressRegion": "IL", "postalCode": "60415", "addressCountry": "US"},
             "areaServed": areas, "sameAs": [FACEBOOK, GOOGLE_MAPS]}
@@ -246,7 +275,7 @@ def page(path, title, desc, main, schema=(), trail=None, active=None, hero=None)
 <a class="skip" href="#main">Skip to content</a>
 <div class="topbar"><div class="wrap"><span><span class="stars" aria-hidden="true">&#10038; &#10038; &#10038; &#10038;</span> Locally owned in Chicago Ridge, IL</span><span>Call or text <a href="{TEL}">{PHONE}</a></span></div></div>
 <header class="site"><div class="wrap">
-<a class="brand" href="{u('/')}"><img src="{u(LOGO)}" alt="" width="48" height="48"><span class="word"><b>Southside Strong</b><i>Junk Removal</i></span></a>
+<a class="brand" href="{u('/')}"><img src="{u(LOGO)}" alt="Southside Strong Junk Removal" width="87" height="60"></a>
 <nav class="main" aria-label="Main"><ul>{nav}</ul></nav>
 <div class="head-cta"><a class="btn btn-red btn-sm btn-call" href="{TEL}">{ico('phone')}<span class="long">{PHONE}</span><span class="sr">Call</span></a>
 <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu">{ico('menu')}</button></div>
@@ -259,7 +288,7 @@ def page(path, title, desc, main, schema=(), trail=None, active=None, hero=None)
     if hero:
         hero_html = hero if isinstance(hero, str) else sub_hero(*hero, trail=trail, key=path)
     foot_services = "".join(f'<li><a href="{u("/" + s["slug"] + "/")}">{esc(s["name"])}</a></li>' for s in SERVICES[:8])
-    foot_towns = "".join(f'<li><a href="{u(T.page_path(s))}">{esc(t)}</a></li>' for s, t in T.WAVE1[:8])
+    foot_towns = "".join(f'<li><a href="{u(T.page_path(s))}">{esc(t)}</a></li>' for s, t in ACTIVE[:8])
     foot = f"""</main>
 <footer class="site"><div class="wrap">
 <div class="cols4">
@@ -322,7 +351,7 @@ def towns_list(items):
 
 def wave1_with_miles():
     rows = []
-    for s, t in T.WAVE1:
+    for s, t in ACTIVE:
         m = CENSUS[t]["miles_from_chicago_ridge"]
         rows.append((s, t, "home base" if m == 0 else f"{m:g} mi"))
     return sorted(rows, key=lambda r: CENSUS[r[1]]["miles_from_chicago_ridge"])
@@ -351,7 +380,7 @@ def build_home():
 <div class="card"><p class="kicker">Our motto</p><h3>{esc(MOTTO)}</h3><p class="muted">From Bridgeport to Beverly to the Burbs.</p></div></div>"""
     near = wave1_with_miles()
     area = (towns_list(near) + f'<p style="margin-top:14px">Also on Chicago\'s Southwest Side: <a href="{u(T.page_path("chicago"))}">Beverly, Mount Greenwood and Morgan Park</a>. '
-            f'Farther out, we also serve {", ".join(T.LISTED_FARTHER[:-1])} and {T.LISTED_FARTHER[-1]}. <a href="{u("/service-area/")}">Full service area</a></p>')
+            f'<a href="{u("/service-area/")}">Full service area</a></p>')
     faqs = [
       ("How much does junk removal cost?", f"<p>It depends on how much there is, what it is, and how hard it is to get out. Call or text a photo to {PHONE} and we will give you a straight price before we start. See <a href=\"{{u:/pricing/}}\">how pricing works</a>.</p>"),
       ("Do I have to bring everything outside?", "<p>No. We carry it out from wherever it is: basement, attic, upstairs, garage or backyard.</p>"),
@@ -361,6 +390,7 @@ def build_home():
     ]
     main = (section("Junk removal services", service_cards(SERVICES), cls="band", kicker="What we haul", sub="Residential and commercial junk removal. If it is not hazardous, we can probably take it. Pick a job to see how it works.")
             + section("How it works", steps, cls="band alt", kicker="Three steps")
+            + section("Recent jobs", gallery(HOME_GALLERY), cls="band", kicker="From our Facebook page", sub=f'Garages, basements, attics, remodel debris and the trailer that hauls it all. More on <a href="{FACEBOOK}" rel="noopener" target="_blank">our Facebook page</a>.')
             + section("What customers say", rev, cls="band", kicker="Reviews")
             + section("A local, father-and-son junk removal company", about, cls="band sky", kicker="Built by the Southside")
             + section("Where we work", area, cls="band", kicker="Service area", sub="Based in Chicago Ridge. Here is how far each town is from our base.")
@@ -375,7 +405,7 @@ def build_services():
     trail0 = [("Home", "/"), ("Services", None)]
     main = (section("Every job we do", service_cards(SERVICES), kicker="Services",
                     sub="Not sure where your job fits? Call or text a photo and ask.")
-            + section("Also on our list", f"""<div class="prose"><ul class="checks"><li>Trash and junk pickup for one-time cleanups</li><li>Trailer rental: call {PHONE} to ask about it</li></ul></div>""", cls="band alt")
+            + section("Also on our list", f"""<div class="prose"><ul class="checks"><li>Trash and junk pickup for one-time cleanups</li><li>Not sure where your job fits? Call or text {PHONE}.</li></ul></div>""", cls="band alt")
             + cta_band())
     page("/services/", "Junk Removal Services | Southside Strong, Chicago Ridge",
          "Junk removal services in Chicago Ridge and the southwest suburbs: furniture, appliances, mattresses, hot tubs, pools, yard waste, debris and cleanouts.",
@@ -394,23 +424,25 @@ def build_services():
         near = wave1_with_miles()[:8]
         aside = (f'<div class="card"><h3>Get a free estimate</h3><p>Call or text a photo of what needs to go.</p>'
                  f'<p><a class="btn btn-red" href="{TEL}">{ico("phone")}{PHONE}</a></p><p class="muted">Based in Chicago Ridge, serving the southwest suburbs and Chicago\'s Southwest Side.</p></div>')
+        pics = section("From our jobs", gallery(s["photos"]), cls="band sky", sub="Photos from our Facebook page.") if s.get("photos") else ""
         main = (f'<section class="band"><div class="wrap"><div class="two"><div class="prose">{body}</div><div>{aside}</div></div></div></section>'
+                + pics
                 + section("What customers say", review_block(rel_reviews), cls="band alt")
                 + section(f"{s['name']} questions", faq_html(s["faqs"]), cls="band")
                 + section(f"{s['name']} near you", towns_list(near) + f'<p style="margin-top:12px"><a href="{u("/service-area/")}">See every town we serve</a></p>', cls="band sky")
                 + section("Related services", service_cards(related), cls="band")
                 + cta_band())
         svc = {"@context": "https://schema.org", "@type": "Service", "name": s["name"].capitalize(), "serviceType": s["name"].capitalize(),
-               "provider": {"@id": BUSINESS_ID}, "areaServed": [{"@type": "City", "name": f"{t}, IL"} for _, t in T.WAVE1], "url": absu(path)}
+               "provider": {"@id": BUSINESS_ID}, "areaServed": [{"@type": "City", "name": f"{t}, IL"} for _, t in ACTIVE], "url": absu(path)}
         page(path, s["title"], s["desc"], main, schema=[svc, faq_schema(s["faqs"])], trail=[(n, p if p else path) for n, p in trail], active="/services/",
              hero=(s["h1"], s["lede"]))
 
 # ---------------------------------------------------------------- towns
 def build_towns():
-    meta = T.WAVE1 + [("chicago", "Chicago")]
+    meta = ACTIVE + [("chicago", "Chicago")]
     for slug, town in meta:
         facts = TOWN_FACTS.get(slug)
-        d = T.compose(slug, town, CENSUS, facts, T.WAVE1, REVIEWS, esc, PHONE, OUTLETS, donations_html)
+        d = T.compose(slug, town, CENSUS, facts, ACTIVE, REVIEWS, esc, PHONE, OUTLETS, donations_html)
         path = T.page_path(slug)
         trail = [("Home", "/"), ("Service area", "/service-area/"), (d["place"], path)]
         body = "".join(section(h, inner, cls="band" + (" alt" if i % 2 else "")) for i, (h, inner) in enumerate(d["sections"]))
@@ -432,9 +464,10 @@ def build_area():
     ring = lambda lo, hi: [r for r in rows if lo <= CENSUS[r[1]]["miles_from_chicago_ridge"] < hi]
     inner = (f"<h3>Home base and next door</h3>{towns_list(ring(0, 4))}"
              f"<h3 style=\"margin-top:22px\">Four to eight miles</h3>{towns_list(ring(4, 8))}"
-             f"<h3 style=\"margin-top:22px\">Eight miles and up</h3>{towns_list(ring(8, 99))}"
+             f"<h3 style=\"margin-top:22px\">Eight to fifteen miles</h3>{towns_list(ring(8, 15))}"
+             f"<h3 style=\"margin-top:22px\">Farther out: Will, DuPage and Kane counties</h3>{towns_list(ring(15, 99))}"
              f"<h3 style=\"margin-top:22px\">Chicago's Southwest Side</h3>{towns_list([('chicago', 'Beverly, Mount Greenwood, Morgan Park', '')])}"
-             f"<p style=\"margin-top:18px\">We also serve {', '.join(T.LISTED_FARTHER[:-1])} and {T.LISTED_FARTHER[-1]}. Call to ask about your town.</p>")
+             f"<p style=\"margin-top:18px\">Not on the list? Call {PHONE} and ask about your town.</p>")
     page("/service-area/", "Service Area: Chicago Ridge & the Southwest Suburbs",
          "Junk removal in Chicago Ridge, Oak Lawn, Orland Park, Tinley Park, the southwest suburbs and Chicago's Southwest Side. See your town's pickup rules.",
          section("Towns we serve", inner, kicker="Service area", sub="Every town page lists what that town's own garbage pickup will take, so you know when you need us and when you do not.") + cta_band(),
@@ -455,7 +488,8 @@ def build_about():
 </div><div><div class="card"><p class="kicker">Our motto</p><h3>{esc(MOTTO)}</h3><p class="muted">From Bridgeport to Beverly to the Burbs.</p></div></div></div>"""
     page("/about/", "About Southside Strong Junk Removal | Chicago Ridge, IL",
          "Southside Strong is a locally owned, father-and-son junk removal company based in Chicago Ridge, IL. Honest pricing and no-nonsense service.",
-         f'<section class="band"><div class="wrap">{body}</div></section>' + section("In customers' words", review_block(rv), cls="band alt") + cta_band(),
+         f'<section class="band"><div class="wrap">{body}</div></section>' + section("Our trailer and our work", gallery(ABOUT_GALLERY), cls="band sky")
+         + section("In customers' words", review_block(rv), cls="band alt") + cta_band(),
          trail=[("Home", "/"), ("About", "/about/")], active="/about/",
          hero=("Built by the Southside. Ready to work.", "A locally owned, father-and-son junk removal company based in Chicago Ridge."))
 
@@ -636,7 +670,7 @@ def gates():
     if pend:
         (fails if not NOINDEX else warns).append(f"facts not yet verified: {', '.join(pend)}")
     # Town page overlap (5-gram Jaccard over the main column, customer quotes excluded).
-    town_paths = [T.page_path(s) for s, _ in T.WAVE1] + [T.page_path("chicago")]
+    town_paths = [T.page_path(s) for s, _ in ACTIVE] + [T.page_path("chicago")]
     grams = {p: ngrams(visible(PAGES[p])) for p in town_paths}
     worst = sorted(((len(grams[a] & grams[b]) / max(1, len(grams[a] | grams[b])), a, b)
                     for i, a in enumerate(town_paths) for b in town_paths[i + 1:]), reverse=True)
@@ -650,8 +684,9 @@ if __name__ == "__main__":
     build_reviews(); build_contact(); build_faq(); build_privacy(); build_404()
     write_all()
     fails, warns, worst, sworst = gates()
-    verified_towns = sum(1 for s, _ in T.WAVE1 + [("chicago", "")] if TOWN_FACTS.get(s))
-    print(f"pages: {len(PAGES)} | reviews shown: {len(REVIEWS)} | towns with fact files: {verified_towns} of {len(T.WAVE1) + 1} | noindex: {NOINDEX}")
+    waiting = [t for sl, t in T.WAVE1 if sl not in TOWN_FACTS]
+    print(f"pages: {len(PAGES)} | reviews shown: {len(REVIEWS)} | town pages built: {len(ACTIVE) + 1} of {len(T.WAVE1) + 1} | noindex: {NOINDEX}")
+    if waiting: print("towns waiting for verified facts (not built): " + ", ".join(waiting))
     print(f"town overlap, worst pairs (limit 0.30): " + "; ".join(f"{a.strip('/')} ~ {b.strip('/')} {s:.3f}" for s, a, b in worst[:3]))
     print(f"service overlap, worst pair: {sworst[1].strip('/')} ~ {sworst[2].strip('/')} {sworst[0]:.3f}")
     if worst and worst[0][0] > 0.30:

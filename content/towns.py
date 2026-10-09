@@ -18,9 +18,11 @@ WAVE1 = [
   ("blue-island", "Blue Island"), ("crestwood", "Crestwood"), ("midlothian", "Midlothian"), ("oak-forest", "Oak Forest"),
   ("orland-park", "Orland Park"), ("tinley-park", "Tinley Park"), ("country-club-hills", "Country Club Hills"),
   ("calumet-city", "Calumet City"),
+  # The rest of the business's own Facebook service-area list (Eddie, 2026-10-09: "use the towns for their facebook list").
+  ("brookfield", "Brookfield"), ("lockport", "Lockport"), ("frankfort", "Frankfort"), ("bolingbrook", "Bolingbrook"),
+  ("naperville", "Naperville"), ("joliet", "Joliet"), ("aurora", "Aurora"),
 ]
-# Towns on the business's own Facebook service-area list that are past this radius. Listed on the hub, no page yet.
-LISTED_FARTHER = ["Frankfort", "Lockport", "Bolingbrook", "Brookfield", "Joliet", "Naperville", "Aurora"]
+LISTED_FARTHER = []
 
 FACT_ORDER = [
   ("hauler", "Who collects the garbage"),
@@ -124,8 +126,9 @@ def compose(slug, town, census, facts, towns_meta, reviews, esc, phone, outlets,
         title = f"Junk Removal in {town}, IL | Southside Strong"
         desc = f"Junk removal in {town}, IL from a locally owned crew {miles:g} miles away in Chicago Ridge. Furniture, appliances, cleanouts, hot tubs and pools."
         h1 = f"Junk removal in {town}, IL"
-        lede = (f"{town} is about {miles:g} miles from our base in Chicago Ridge. Furniture, appliances, cleanouts, hot tubs, "
-                f"pools and light demolition, carried out from wherever they sit and hauled away.")
+        lede = ((f"{town} is on our service list, about {miles:g} miles from our base in Chicago Ridge. " if miles > 12 else
+                 f"{town} is about {miles:g} miles from our base in Chicago Ridge. ")
+                + "Furniture, appliances, cleanouts, hot tubs, pools and light demolition, carried out from wherever they sit and hauled away.")
     if len(desc) > 158:
         desc = desc.replace(" Free estimates.", "")
 

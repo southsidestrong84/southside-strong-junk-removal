@@ -8,7 +8,7 @@ related (other service slugs)."""
 
 SERVICES = [
   {
-    "slug": "furniture-removal", "name": "Furniture removal", "icon": "sofa",
+    "slug": "furniture-removal", "photos": ["dump-trailer-loaded"], "name": "Furniture removal", "icon": "sofa",
     "card": "Couches, sectionals, recliners, dressers, beds, desks. We take it apart if it won't fit through the door.",
     "title": "Furniture Removal in Chicago Ridge & Oak Lawn",
     "desc": "Couch, sectional and furniture removal in Chicago Ridge, Oak Lawn and the southwest suburbs. We carry it out, take it apart if needed, and clean up.",
@@ -145,7 +145,7 @@ SERVICES = [
     "related": ["light-demolition", "above-ground-pool-removal", "construction-debris-removal"],
   },
   {
-    "slug": "swing-set-removal", "name": "Swing set and playset removal", "icon": "leaf",
+    "slug": "swing-set-removal", "photos": ["swing-set-before"], "name": "Swing set and playset removal", "icon": "leaf",
     "card": "Wooden playsets, metal swing sets and trampolines taken apart, hauled away and the yard left clean.",
     "title": "Swing Set & Playset Removal | Chicago Ridge & Oak Lawn",
     "desc": "Swing set, playset and trampoline removal in Chicago Ridge, Oak Lawn and the southwest suburbs. We take it apart, haul it away and leave the yard clean.",
@@ -169,7 +169,7 @@ SERVICES = [
     "related": ["yard-waste-removal", "above-ground-pool-removal", "hot-tub-removal"],
   },
   {
-    "slug": "light-demolition", "name": "Light demolition", "icon": "hammer",
+    "slug": "light-demolition", "photos": ["remodel-debris-pile"], "name": "Light demolition", "icon": "hammer",
     "card": "Sheds, decks, fences and kitchen or basement tear-outs, torn out and hauled away together.",
     "title": "Light Demolition: Sheds, Decks & Tear-Outs | Chicago Ridge",
     "desc": "Light demolition in Chicago Ridge, Oak Lawn and the southwest suburbs: sheds, decks, fences and kitchen or basement tear-outs, hauled away in one trip.",
@@ -190,7 +190,7 @@ SERVICES = [
     "related": ["construction-debris-removal", "hot-tub-removal", "yard-waste-removal"],
   },
   {
-    "slug": "construction-debris-removal", "name": "Construction debris removal", "icon": "debris",
+    "slug": "construction-debris-removal", "photos": ["remodel-debris-pile", "dump-trailer-loaded"], "name": "Construction debris removal", "icon": "debris",
     "card": "Scrap wood, drywall, cabinets, flooring and leftover materials from a remodel or project.",
     "title": "Construction Debris Removal | Chicago Ridge & Oak Lawn",
     "desc": "Remodel and construction debris removal in Chicago Ridge, Oak Lawn and nearby: scrap wood, drywall, cabinets and flooring, loaded and hauled away.",
@@ -214,7 +214,7 @@ SERVICES = [
     "related": ["light-demolition", "commercial-junk-removal", "garage-cleanouts"],
   },
   {
-    "slug": "garage-cleanouts", "name": "Garage cleanouts", "icon": "garage",
+    "slug": "garage-cleanouts", "photos": ["garage-cleanout-before"], "name": "Garage cleanouts", "icon": "garage",
     "card": "Get the car back in the garage. We clear it out, shelf to shelf, and sweep the floor.",
     "title": "Garage Cleanouts in Chicago Ridge & Oak Lawn, IL",
     "desc": "Garage cleanouts in Chicago Ridge, Oak Lawn and the southwest suburbs. We sort with you, haul away the junk, and leave a swept floor so the car fits again.",
@@ -238,7 +238,7 @@ SERVICES = [
     "related": ["basement-cleanouts", "estate-cleanouts", "yard-waste-removal"],
   },
   {
-    "slug": "basement-cleanouts", "name": "Basement cleanouts", "icon": "stairs",
+    "slug": "basement-cleanouts", "photos": ["basement-cleanout-before"], "name": "Basement cleanouts", "icon": "stairs",
     "card": "Decades of storage carried up the stairs: furniture, boxes, old appliances and more.",
     "title": "Basement Cleanouts in Chicago Ridge & Oak Lawn, IL",
     "desc": "Basement cleanouts in Chicago Ridge, Oak Lawn and the southwest suburbs. We carry everything up the stairs, protect the walls and leave it swept.",
@@ -257,7 +257,7 @@ SERVICES = [
     "related": ["garage-cleanouts", "light-demolition", "estate-cleanouts"],
   },
   {
-    "slug": "estate-cleanouts", "name": "Estate and whole-house cleanouts", "icon": "house",
+    "slug": "estate-cleanouts", "photos": ["room-cleanout-before", "attic-cleanout-before", "closet-cleanout-before", "room-after-cleanout"], "name": "Estate and whole-house cleanouts", "icon": "house",
     "card": "Downsizing, a move, or a loved one's home. Room by room, at your pace, until it is empty.",
     "title": "Estate Cleanouts & Whole-House Cleanouts | Chicago Ridge",
     "desc": "Estate and whole-house cleanouts in Chicago Ridge, Oak Lawn and the southwest suburbs. Room by room, at your pace, and the house left broom clean.",
@@ -279,7 +279,7 @@ SERVICES = [
     "related": ["basement-cleanouts", "garage-cleanouts", "furniture-removal"],
   },
   {
-    "slug": "commercial-junk-removal", "name": "Commercial junk removal", "icon": "building",
+    "slug": "commercial-junk-removal", "photos": ["dump-trailer-curbside"], "name": "Commercial junk removal", "icon": "building",
     "card": "Businesses, landlords, property managers and contractors. Turnovers, office cleanouts and repeat work.",
     "title": "Commercial Junk Removal for Businesses & Landlords",
     "desc": "Commercial junk removal for businesses, landlords and property managers in Chicago Ridge, Oak Lawn and nearby: office cleanouts and unit turnovers.",
@@ -298,6 +298,31 @@ SERVICES = [
     ],
     "review_words": ["commercial", "business", "client", "remodeling", "multiple"],
     "related": ["construction-debris-removal", "estate-cleanouts", "furniture-removal"],
+  },
+  {
+    "slug": "dumpster-trailer-rental", "name": "Dumpster trailer rental", "icon": "trailer",
+    "card": "Rent our black dump trailer when you would rather load it yourself, at your own pace.",
+    "title": "Dumpster Trailer Rental | Chicago Ridge & Southwest Suburbs",
+    "desc": "Dumpster trailer rental in Chicago Ridge and the southwest suburbs: our dump trailer instead of a roll-off for cleanouts, remodels and yard projects.",
+    "h1": "Dumpster trailer rental",
+    "lede": "Sometimes you would rather load it yourself, over a weekend or across a remodel. Rent our dump trailer: the black one with our sign on the side.",
+    "photos": ["dump-trailer-curbside", "dump-trailer-loaded", "dump-trailer-sign"],
+    "body": [
+      ("A dump trailer instead of a roll-off dumpster", """<p>A dumpster trailer does the job of a roll-off dumpster: you fill it, and when it is full it gets hauled away and dumped. The difference is that it sits on its own wheels, so there is no steel box dropped on your driveway.</p>"""),
+      ("Good for", """<ul class="checks cols">
+<li>Garage and basement cleanouts you want to do yourself</li><li>Remodel and tear-out debris</li><li>Yard and landscaping cleanups</li>
+<li>Move-outs and estate cleanouts done by the family</li><li>Landlord turnovers</li></ul>"""),
+      ("What cannot go in", """<p>The same rules as our trucks: no wet paint, solvents, chemicals, motor oil, gasoline, propane tanks, asbestos or medical waste. See <a href="{u:/what-we-take/}">what we take</a> for where those can go. Ask before you load heavy material like concrete, brick, dirt or shingles, because weight adds up long before the trailer looks full.</p>"""),
+      ("How to book it", """<p>Call or text {phone} with your address, what the project is and the dates you need it. We will tell you when the trailer is free and what it costs.</p>"""),
+      ("Rather not lift a thing?", """<p>Then skip the rental and let us load it. That is our regular <a href="{u:/services/}">junk removal</a>: we carry it out from wherever it sits and haul it away.</p>"""),
+    ],
+    "faqs": [
+      ("How long can I keep the trailer?", "<p>Ask when you book. Tell us about the project and we will set the dates with you.</p>"),
+      ("Can I put concrete or dirt in it?", "<p>Ask first. Heavy material hits the weight limit long before the trailer looks full.</p>"),
+      ("Can you load it for me instead?", "<p>Yes. That is our regular junk removal service, priced by the job.</p>"),
+    ],
+    "review_words": ["trailer"],
+    "related": ["construction-debris-removal", "garage-cleanouts", "light-demolition"],
   },
   {
     "slug": "electronics-removal", "name": "TV and electronics removal", "icon": "tv",
