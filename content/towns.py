@@ -144,14 +144,15 @@ def compose(slug, town, census, facts, towns_meta, reviews, esc, phone, outlets,
         q_html = f'<p class="note">Exact wording: &ldquo;{esc(quote)}&rdquo;</p>' if quote and len(quote) <= 400 else ""
         rule_cards.append(f'<div class="fact"><h3>{esc(label)}</h3><p>{esc(v["value"])}</p>{q_html}'
                           f'<p class="src">Source: <a href="{esc(src)}" rel="nofollow noopener" target="_blank">{esc(src.split("/")[2] if "//" in src else src)}</a>, checked {usdate(v.get("accessed", ""))}</p></div>')
-    who = "the city" if is_chicago else "the village"
+    muni = "city" if (is_chicago or (c and " city," in c.get("census_name", ""))) else "village"
+    who = f"the {muni}"
     if contact:
         ask = f"Ask {esc(contact)},"
     else:
         ask = f"Ask {who}"
     if rule_cards:
         intro = (f"<p>Before you pay anyone to haul something away, it is worth knowing what {service_of} regular garbage service will take. "
-                 f"Here is what we could confirm on {who}'s own pages.</p>")
+                 f"Here is what we could confirm from official sources: {who}'s own site or its hauler's page for {place}, linked under each rule.</p>")
         tail = ""
         if unknown:
             topics = ", ".join(TOPIC_WORDS[k] for k in unknown)
