@@ -22,6 +22,7 @@ import glob, hashlib, html, json, math, os, re, shutil, sys, unicodedata
 from datetime import date
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(HERE, "docs")   # GitHub Pages publishes only main /docs, so this generator and content/ are never served
 RESEARCH = os.path.normpath(os.path.join(HERE, "..", "research"))
 sys.path.insert(0, HERE)
 from content.services import SERVICES
@@ -616,25 +617,37 @@ def visible(doc, main_only=True, drop_official=False):
     return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", s))).strip()
 
 def write_all():
-    keep = {".git", "assets", "content", "build.py", "README.md", "CNAME", ".nojekyll", "__pycache__", "tools"}
+    # Output from before 2026-10-10, when Pages served the repo root, is cleared from the root the same way as before.
+    keep = {".git", ".gitignore", "assets", "content", "build.py", "README.md", "docs", "__pycache__", "tools"}
     for name in os.listdir(HERE):
         if name in keep:
             continue
         p = os.path.join(HERE, name)
         if os.path.isdir(p) and os.path.exists(os.path.join(p, "index.html")):
             shutil.rmtree(p)
-        elif name in ("index.html", "404.html", "sitemap.xml", "robots.txt"):
+        elif name in ("index.html", "404.html", "sitemap.xml", "robots.txt", ".nojekyll"):
             os.remove(p)
+    # docs/ is all generated: every build rewrites everything in it except a CNAME (the custom domain, at launch).
+    os.makedirs(OUT, exist_ok=True)
+    for name in os.listdir(OUT):
+        if name == "CNAME":
+            continue
+        p = os.path.join(OUT, name)
+        if os.path.isdir(p):
+            shutil.rmtree(p)
+        else:
+            os.remove(p)
+    shutil.copytree(os.path.join(HERE, "assets"), os.path.join(OUT, "assets"), ignore=shutil.ignore_patterns(".DS_Store"))
     for path, doc in PAGES.items():
-        out = os.path.join(HERE, "404.html") if path == "/404.html" else os.path.join(HERE, path.strip("/"), "index.html") if path != "/" else os.path.join(HERE, "index.html")
+        out = os.path.join(OUT, "404.html") if path == "/404.html" else os.path.join(OUT, path.strip("/"), "index.html") if path != "/" else os.path.join(OUT, "index.html")
         os.makedirs(os.path.dirname(out), exist_ok=True)
         open(out, "w", encoding="utf-8").write(doc)
     urls = [p for p in PAGES if p != "/404.html"]
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(
         f"  <url><loc>{absu(p)}</loc><lastmod>{date.today().isoformat()}</lastmod></url>\n" for p in urls) + "</urlset>\n"
-    open(os.path.join(HERE, "sitemap.xml"), "w").write(sm)
-    open(os.path.join(HERE, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\n\nSitemap: {absu('/sitemap.xml')}\n")
-    open(os.path.join(HERE, ".nojekyll"), "w").write("")
+    open(os.path.join(OUT, "sitemap.xml"), "w").write(sm)
+    open(os.path.join(OUT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\n\nSitemap: {absu('/sitemap.xml')}\n")
+    open(os.path.join(OUT, ".nojekyll"), "w").write("")
 
 def ngrams(text, n=5):
     w = re.findall(r"[a-z0-9']+", text.lower())
@@ -658,7 +671,7 @@ def gates():
             fails.append(f"{path}: needs exactly one h1")
         for href in re.findall(r'href="(' + re.escape(BASE) + r'/[^"#?]*)', doc):
             rel = href[len(BASE):]
-            target = os.path.join(HERE, rel.strip("/"), "index.html") if rel.endswith("/") else os.path.join(HERE, rel.strip("/"))
+            target = os.path.join(OUT, rel.strip("/"), "index.html") if rel.endswith("/") else os.path.join(OUT, rel.strip("/"))
             if rel != "/" and rel not in PAGES and not os.path.exists(target) and not rel.startswith("/assets/"):
                 fails.append(f"{path}: broken internal link {rel}")
         if re.search(r"\{(u|fact|reviews|reviewcards|event|donations):", doc):
