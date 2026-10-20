@@ -37,7 +37,7 @@ PHONE_E164 = "+17082476440"
 EMAIL = "southsidestrong84@gmail.com"
 BASE = ""                                        # custom domain southsidestrongremoval.com (2026-10-20); was "/southside-strong-junk-removal" on github.io
 SITE = "https://southsidestrongremoval.com" + BASE
-NOINDEX = True
+NOINDEX = False  # owner approved the site as shown: Eddie, 2026-10-20: "they like the website are ready to launch it 100%"
 # Google Tag Manager in the business's own GTM account 6383874435; fires GA4 G-3LPY05KNPR (own GA account 412733699), 2026-10-20.
 GTM_ID = "GTM-59T6Q4PS"
 GTM_HEAD = ("<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});"
