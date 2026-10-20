@@ -35,9 +35,17 @@ SHORT = "Southside Strong"
 PHONE = "(708) 247-6440"
 PHONE_E164 = "+17082476440"
 EMAIL = "southsidestrong84@gmail.com"
-BASE = "/southside-strong-junk-removal"          # "" once a custom domain points at this repo
-SITE = "https://ogeddiesmith.github.io" + BASE
+BASE = ""                                        # custom domain southsidestrongremoval.com (2026-10-20); was "/southside-strong-junk-removal" on github.io
+SITE = "https://southsidestrongremoval.com" + BASE
 NOINDEX = True
+# Google Tag Manager in the business's own GTM account 6383874435; fires GA4 G-3LPY05KNPR (own GA account 412733699), 2026-10-20.
+GTM_ID = "GTM-59T6Q4PS"
+GTM_HEAD = ("<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});"
+            "var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;"
+            "j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);"
+            f"}})(window,document,'script','dataLayer','{GTM_ID}');</script>")
+GTM_BODY = (f'<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={GTM_ID}" height="0" width="0" '
+            'style="display:none;visibility:hidden"></iframe></noscript>')
 ASSET_V = "5"
 FACEBOOK = "https://www.facebook.com/profile.php?id=61576515234106"
 PLACE_ID = "ChIJhbWVU5cHPGQR6F34P4rSmgw"
@@ -247,6 +255,7 @@ def page(path, title, desc, main, schema=(), trail=None, active=None, hero=None)
 <html lang="en">
 <head>
 <meta charset="utf-8">
+{GTM_HEAD}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
@@ -273,6 +282,7 @@ def page(path, title, desc, main, schema=(), trail=None, active=None, hero=None)
 {schema_tag(objs)}
 </head>
 <body>
+{GTM_BODY}
 <a class="skip" href="#main">Skip to content</a>
 <div class="topbar"><div class="wrap"><span><span class="stars" aria-hidden="true">&#10038; &#10038; &#10038; &#10038;</span> Locally owned in Chicago Ridge, IL</span><span>Call or text <a href="{TEL}">{PHONE}</a></span></div></div>
 <header class="site"><div class="wrap">
