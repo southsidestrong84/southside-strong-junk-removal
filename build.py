@@ -15,7 +15,7 @@ its Google reviews. State and village rules trace to an official page with the s
 (research/FACTS-VERIFIED.md, research/towns/facts-group*.json). No prices, no same-day promise, and never
 the name of the franchise brand the business used to operate under.
 
-PREVIEW. NOINDEX stays True until the owner approves the copy and the CONFIRM list in ../CLIENT-BRIEF.md.
+LIVE since 2026-10-20 at https://southsidestrongremoval.com (owner approved the site as shown).
 SITE and BASE point at the GitHub Pages address and change the day the custom domain is pointed here.
 """
 import glob, hashlib, html, json, math, os, re, shutil, sys, unicodedata

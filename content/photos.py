@@ -1,6 +1,6 @@
 """Job photos from the business's own Facebook page and Reels (Eddie, 2026-10-09: "use their logo and photos that you
 found on their fb"). Captured from the page viewer, trimmed and converted in ../_source-photos (gitignored).
-Edits: the swing set's family name sign is blurred; the attic shot is cropped to leave out a medical-supply box.
+Edits: the swing set's family name sign is blurred; the attic shot is cropped.
 Captions describe what the photo shows, never a town or a customer. Before and after shots are NOT pairs of the
 same room, so they are never shown side by side as a pair."""
 

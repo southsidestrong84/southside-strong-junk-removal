@@ -3,7 +3,7 @@
 Static site for Southside Strong Junk Removal, Chicago Ridge, IL. Preview, not launched: every page carries
 `noindex, nofollow` until the owner approves the copy.
 
-**Preview:** https://ogeddiesmith.github.io/southside-strong-junk-removal/
+**Live:** https://southsidestrongremoval.com/
 
 Built by `build.py` into `docs/`, the only folder GitHub Pages publishes (branch main, folder /docs). Do not hand-edit
 the HTML; the next build overwrites it.
